@@ -174,7 +174,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                                     placeholder: (context, url) => Container(
                                           child: CircularProgressIndicator(
                                             strokeWidth: 2.0,
-                                            valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                                            valueColor: AlwaysStoppedAnimation<Color>(darkPrimaryColor),
                                           ),
                                           width: 90.0,
                                           height: 90.0,
@@ -191,7 +191,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                               : Icon(
                                   Icons.account_circle,
                                   size: 90.0,
-                                  color: greyColor,
+                                  color: textIconsColor,
                                 ))
                           : Material(
                               child: Image.file(
@@ -211,7 +211,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         onPressed: getImage,
                         padding: EdgeInsets.all(30.0),
                         splashColor: Colors.transparent,
-                        highlightColor: greyColor,
+                        highlightColor: textIconsColor,
                         iconSize: 30.0,
                       ),
                     ],
@@ -237,9 +237,9 @@ class SettingsScreenState extends State<SettingsScreen> {
                       data: Theme.of(context).copyWith(primaryColor: primaryColor),
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: 'Sweetie',
+                          hintText: 'User Name',
                           contentPadding: new EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
+                          hintStyle: TextStyle(color: darkPrimaryColor),
                         ),
                         controller: controllerNickname,
                         onChanged: (value) {
@@ -264,9 +264,9 @@ class SettingsScreenState extends State<SettingsScreen> {
                       data: Theme.of(context).copyWith(primaryColor: primaryColor),
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: 'Fun, like travel and play PES...',
+                          hintText: 'Write your bio here...',
                           contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
+                          hintStyle: TextStyle(color: darkPrimaryColor),
                         ),
                         controller: controllerAboutMe,
                         onChanged: (value) {
@@ -307,7 +307,7 @@ class SettingsScreenState extends State<SettingsScreen> {
           child: isLoading
               ? Container(
                   child: Center(
-                    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(themeColor)),
+                    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(darkPrimaryColor)),
                   ),
                   color: Colors.white.withOpacity(0.8),
                 )

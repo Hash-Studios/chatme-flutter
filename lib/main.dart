@@ -147,7 +147,7 @@ class MainScreenState extends State<MainScreen> {
             children: <Widget>[
               ClipRRect(borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
                               child: Container(
-                  color: themeColor,
+                  color: darkPrimaryColor,
                   margin: EdgeInsets.all(0.0),
                   padding: EdgeInsets.only(bottom: 18.0, top: 18.0),
                   height: 120.0,
@@ -169,7 +169,7 @@ class MainScreenState extends State<MainScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Are you sure to quit app?',
+                        'You sure want to quit app?',
                         style: TextStyle(color: Colors.white70, fontSize: 14.0),
                       ),
                     ],
@@ -256,10 +256,9 @@ class MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'MAIN',
+          'ChatMe',
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
         ),
-        centerTitle: true,
         actions: <Widget>[
           PopupMenuButton<Choice>(
             onSelected: onItemMenuPress,
@@ -298,7 +297,7 @@ class MainScreenState extends State<MainScreen> {
                   if (!snapshot.hasData) {
                     return Center(
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                        valueColor: AlwaysStoppedAnimation<Color>(darkPrimaryColor),
                       ),
                     );
                   } else {
@@ -320,7 +319,7 @@ class MainScreenState extends State<MainScreen> {
                       child: Center(
                         child: CircularProgressIndicator(
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(themeColor)),
+                                AlwaysStoppedAnimation<Color>(darkPrimaryColor)),
                       ),
                       color: Colors.white.withOpacity(0.8),
                     )
@@ -348,7 +347,7 @@ class MainScreenState extends State<MainScreen> {
                           child: CircularProgressIndicator(
                             strokeWidth: 1.0,
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(themeColor),
+                                AlwaysStoppedAnimation<Color>(darkPrimaryColor),
                           ),
                           width: 50.0,
                           height: 50.0,
@@ -362,7 +361,7 @@ class MainScreenState extends State<MainScreen> {
                     : Icon(
                         Icons.account_circle,
                         size: 50.0,
-                        color: greyColor,
+                        color: textIconsColor,
                       ),
                 borderRadius: BorderRadius.all(Radius.circular(25.0)),
                 clipBehavior: Clip.hardEdge,
@@ -403,7 +402,7 @@ class MainScreenState extends State<MainScreen> {
                           peerAvatar: document['photoUrl'],
                         )));
           },
-          color: greyColor2,
+          color: textIconsColor,
           padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
