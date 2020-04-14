@@ -400,6 +400,7 @@ class MainScreenState extends State<MainScreen> {
                     builder: (context) => Chat(
                           peerId: document.documentID,
                           peerAvatar: document['photoUrl'],
+                          peerName: document['nickname'],
                         )));
           },
           color: textIconsColor,
