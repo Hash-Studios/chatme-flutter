@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:giphy_picker/giphy_picker.dart';
+import 'package:giphy_client/giphy_client.dart';
 
 class Chat extends StatelessWidget {
   final String peerId;
@@ -62,6 +63,10 @@ class ChatScreenState extends State<ChatScreen> {
   String peerId;
   String peerAvatar;
   String id;
+
+  GiphyGif gif;
+  String gifURL;
+  File gifFile;
 
   var listMessage;
   String groupChatId;
@@ -147,6 +152,25 @@ class ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  Future getGIF() async {
+    gif = await GiphyPicker.pickGif(
+            showPreviewPage: false,
+            context: context,
+            apiKey: 'RNBmN2cvGifZV95iMZJZSePN1wsyfiUt')
+        .then((value) {
+      gifURL = value.images.original.url;
+      print(gifURL);
+    }, onError: (e) {
+      print(e);
+    });
+    if (gifURL != null) {
+      setState(() {
+        isLoading = true;
+      });
+      uploadGIF();
+    }
+  }
+
   Future uploadFile() async {
     String fileName = DateTime.now().millisecondsSinceEpoch.toString();
     StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
@@ -166,8 +190,27 @@ class ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  Future uploadGIF() async {
+    // String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    // StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
+    // StorageUploadTask uploadTask = reference.putFile(imageFile);
+    // StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+    // storageTaskSnapshot.ref.getDownloadURL().then((downloadUrl) {
+    // gifURL = ;
+    setState(() {
+      isLoading = false;
+      onSendMessage(gifURL, 3);
+    });
+    // }, onError: (err) {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    //   Fluttertoast.showToast(msg: 'This GIF cannot be used');
+    // });
+  }
+
   void onSendMessage(String content, int type) {
-    // type: 0 = text, 1 = image, 2 = sticker
+    // type: 0 = text, 1 = image, 2 = sticker, 3 = gif
     if (content.trim() != '') {
       textEditingController.clear();
 
@@ -279,17 +322,77 @@ class ChatScreenState extends State<ChatScreen> {
                               right: 10.0),
                         )
                       // Sticker
-                      : Container(
-                          child: new Image.asset(
-                            'assets/images/${document['content']}.gif',
-                            width: 100.0,
-                            height: 100.0,
-                            fit: BoxFit.cover,
-                          ),
-                          margin: EdgeInsets.only(
-                              bottom: isLastMessageRight(index) ? 00.0 : 0.0,
-                              right: 10.0),
-                        ),
+                      : document['type'] == 2
+                          ? Container(
+                              child: new Image.asset(
+                                'assets/images/${document['content']}.gif',
+                                width: 100.0,
+                                height: 100.0,
+                                fit: BoxFit.cover,
+                              ),
+                              margin: EdgeInsets.only(
+                                  bottom:
+                                      isLastMessageRight(index) ? 00.0 : 0.0,
+                                  right: 10.0),
+                            )
+                          : Container(
+                              child: FlatButton(
+                                child: Material(
+                                  child: CachedNetworkImage(
+                                    placeholder: (context, url) => Hero(
+                                      tag: "img$url",
+                                      child: Container(
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  darkPrimaryColor),
+                                        ),
+                                        width: 200.0,
+                                        height: 200.0,
+                                        padding: EdgeInsets.all(70.0),
+                                        decoration: BoxDecoration(
+                                          color: lightPrimaryColor,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Material(
+                                      child: Image.asset(
+                                        'assets/images/img_not_available.jpeg',
+                                        width: 200.0,
+                                        height: 200.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8.0),
+                                      ),
+                                      clipBehavior: Clip.hardEdge,
+                                    ),
+                                    imageUrl: document['content'],
+                                    width: 200.0,
+                                    height: 200.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                  clipBehavior: Clip.hardEdge,
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FullPhoto(
+                                              url: document['content'])));
+                                },
+                                padding: EdgeInsets.all(0),
+                              ),
+                              margin: EdgeInsets.only(
+                                  bottom: isLastMessageRight(index) ? 0.0 : 0.0,
+                                  right: 10.0),
+                            ),
             ],
             mainAxisAlignment: MainAxisAlignment.end,
           ),
@@ -539,7 +642,7 @@ class ChatScreenState extends State<ChatScreen> {
                       margin: new EdgeInsets.symmetric(horizontal: 1.0),
                       child: new IconButton(
                         icon: new Icon(FontAwesomeIcons.smileWink),
-                        onPressed: getImage,
+                        onPressed: getGIF,
                         color: primaryColor,
                       ),
                     ),
@@ -576,7 +679,8 @@ class ChatScreenState extends State<ChatScreen> {
               ),
             ],
           ),
-          Container(color: lightPrimaryColor,
+          Container(
+            color: lightPrimaryColor,
             height: 181,
             child: Scrollbar(
               child: GridView.count(
@@ -762,7 +866,7 @@ class ChatScreenState extends State<ChatScreen> {
                   .document(groupChatId)
                   .collection(groupChatId)
                   .orderBy('timestamp', descending: true)
-                  .limit(20)
+                  .limit(50)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {

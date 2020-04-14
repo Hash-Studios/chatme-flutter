@@ -34,15 +34,26 @@ class FullPhotoScreenState extends State<FullPhotoScreen> {
     super.initState();
   }
 
+  // Widget loadingImage(BuildContext context, ImageChunkEvent imageChunkEvent) {
+  //   return LinearProgressIndicator(
+  //     value: imageChunkEvent == null
+  //         ? 0
+  //         : imageChunkEvent.cumulativeBytesLoaded /
+  //             imageChunkEvent.expectedTotalBytes,
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Hero(tag: "img$url",
-                  child: PhotoView(
-      imageProvider: NetworkImage(url),
-      minScale: 0.3,
-      backgroundDecoration: BoxDecoration(color: Colors.white),
-    ),
-        ));
+        child: Hero(
+      tag: "img$url",
+      child: PhotoView(
+        imageProvider: NetworkImage(url),
+        minScale: 0.3,
+        // loadingBuilder: loadingImage,
+        backgroundDecoration: BoxDecoration(color: Colors.white),
+      ),
+    ));
   }
 }
