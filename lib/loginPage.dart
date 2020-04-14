@@ -304,34 +304,30 @@ class LoginScreenState extends State<LoginScreen> {
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
                       color: Color(0Xffdb3236),
-                      onPressed: () => {},
+                      onPressed: () => handleSignIn(),
                       child: new Container(
-                        child: new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new Expanded(
-                              child: new FlatButton(
-                                onPressed: () => {},
-                                padding: EdgeInsets.only(
-                                  top: 20.0,
-                                  bottom: 20.0,
-                                ),
-                                child: new Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[FaIcon(FontAwesomeIcons.google),
-                                    Text(
-                                      "Login with Google",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
+                        child: new Expanded(
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              FaIcon(
+                                FontAwesomeIcons.googlePlusG,
+                                color: Colors.redAccent[100],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 20, bottom: 20, left: 10),
+                                child: Text(
+                                  "Login with Google",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

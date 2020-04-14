@@ -26,7 +26,6 @@ void main() {
   );
 }
 
-
 class MainScreen extends StatefulWidget {
   final String currentUserId;
 
@@ -109,7 +108,7 @@ class MainScreenState extends State<MainScreen> {
       Platform.isAndroid
           ? 'com.dfa.flutterchatdemo'
           : 'com.duytq.flutterchatdemo',
-      'Flutter chat demo',
+      'ChatMe',
       'your channel description',
       playSound: true,
       enableVibration: true,
@@ -142,80 +141,86 @@ class MainScreenState extends State<MainScreen> {
     switch (await showDialog(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(
+          return SimpleDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             contentPadding:
                 EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0, bottom: 0.0),
             children: <Widget>[
-              Container(
-                color: themeColor,
-                margin: EdgeInsets.all(0.0),
-                padding: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                height: 100.0,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: Icon(
-                        Icons.exit_to_app,
-                        size: 30.0,
-                        color: Colors.white,
-                      ),
-                      margin: EdgeInsets.only(bottom: 10.0),
-                    ),
-                    Text(
-                      'Exit app',
-                      style: TextStyle(
+              ClipRRect(borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
+                              child: Container(
+                  color: themeColor,
+                  margin: EdgeInsets.all(0.0),
+                  padding: EdgeInsets.only(bottom: 18.0, top: 18.0),
+                  height: 120.0,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Icon(
+                          Icons.exit_to_app,
+                          size: 30.0,
                           color: Colors.white,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'Are you sure to exit app?',
-                      style: TextStyle(color: Colors.white70, fontSize: 14.0),
-                    ),
-                  ],
+                        ),
+                        margin: EdgeInsets.only(bottom: 10.0),
+                      ),
+                      Text(
+                        'Quit ChatMe',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'Are you sure to quit app?',
+                        style: TextStyle(color: Colors.white70, fontSize: 14.0),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, 0);
-                },
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      child: Icon(
-                        Icons.cancel,
-                        color: primaryColor,
-                      ),
-                      margin: EdgeInsets.only(right: 10.0),
+              Row(mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SimpleDialogOption(
+                    onPressed: () {
+                      Navigator.pop(context, 0);
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          child: Icon(
+                            Icons.cancel,
+                            color: primaryColor,
+                          ),
+                          margin: EdgeInsets.only(right: 10.0),
+                        ),
+                        Text(
+                          'CANCEL',
+                          style: TextStyle(
+                              color: primaryColor, fontWeight: FontWeight.bold),
+                        )
+                      ],
                     ),
-                    Text(
-                      'CANCEL',
-                      style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, 1);
-                },
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      child: Icon(
-                        Icons.check_circle,
-                        color: primaryColor,
-                      ),
-                      margin: EdgeInsets.only(right: 10.0),
+                  ),
+                  SimpleDialogOption(
+                    onPressed: () {
+                      Navigator.pop(context, 1);
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          child: Icon(
+                            Icons.check_circle,
+                            color: primaryColor,
+                          ),
+                          margin: EdgeInsets.only(right: 10.0),
+                        ),
+                        Text(
+                          'YES',
+                          style: TextStyle(
+                              color: primaryColor, fontWeight: FontWeight.bold),
+                        )
+                      ],
                     ),
-                    Text(
-                      'YES',
-                      style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           );
