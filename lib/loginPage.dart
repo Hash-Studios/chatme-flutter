@@ -296,40 +296,34 @@ class LoginScreenState extends State<LoginScreen> {
             new Container(
               margin: EdgeInsets.only(left: 60.0, right: 60),
               alignment: Alignment.center,
-              child: new Row(
+              child: new Row(mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new Expanded(
-                    child: new FlatButton(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      color: Color(0Xffdb3236),
-                      onPressed: () => handleSignIn(),
-                      child: new Container(
-                        child: new Expanded(
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              FaIcon(
-                                FontAwesomeIcons.googlePlusG,
-                                color: Colors.redAccent[100],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 20, bottom: 20, left: 10),
-                                child: Text(
-                                  "Login with Google",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                              ),
-                            ],
+                  new FlatButton(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                    color: Color(0Xffdb3236),
+                    onPressed: () => handleSignIn(),
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        FaIcon(
+                          FontAwesomeIcons.googlePlusG,
+                          color: Colors.redAccent[100],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20, bottom: 20, left: 10),
+                          child: Text(
+                            "Login with Google",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ],

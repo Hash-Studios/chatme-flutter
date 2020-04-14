@@ -128,6 +128,17 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  Future getImageCamera() async {
+    imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    if (imageFile != null) {
+      setState(() {
+        isLoading = true;
+      });
+      uploadFile();
+    }
+  }
+
   void getSticker() {
     // Hide keyboard when sticker appear
     focusNode.unfocus();
@@ -215,24 +226,27 @@ class ChatScreenState extends State<ChatScreen> {
                           child: FlatButton(
                             child: Material(
                               child: CachedNetworkImage(
-                                placeholder: (context, url) => Container(
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        darkPrimaryColor),
-                                  ),
-                                  width: 200.0,
-                                  height: 200.0,
-                                  padding: EdgeInsets.all(70.0),
-                                  decoration: BoxDecoration(
-                                    color: lightPrimaryColor,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8.0),
+                                placeholder: (context, url) => Hero(
+                                  tag: "img$url",
+                                  child: Container(
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          darkPrimaryColor),
+                                    ),
+                                    width: 200.0,
+                                    height: 200.0,
+                                    padding: EdgeInsets.all(70.0),
+                                    decoration: BoxDecoration(
+                                      color: lightPrimaryColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8.0),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 errorWidget: (context, url, error) => Material(
                                   child: Image.asset(
-                                    'images/img_not_available.jpeg',
+                                    'assets/images/img_not_available.jpeg',
                                     width: 200.0,
                                     height: 200.0,
                                     fit: BoxFit.cover,
@@ -267,7 +281,7 @@ class ChatScreenState extends State<ChatScreen> {
                       // Sticker
                       : Container(
                           child: new Image.asset(
-                            'images/${document['content']}.gif',
+                            'assets/images/${document['content']}.gif',
                             width: 100.0,
                             height: 100.0,
                             fit: BoxFit.cover,
@@ -395,7 +409,7 @@ class ChatScreenState extends State<ChatScreen> {
                           )
                         : Container(
                             child: new Image.asset(
-                              'images/${document['content']}.gif',
+                              'assets/images/${document['content']}.gif',
                               width: 100.0,
                               height: 100.0,
                               fit: BoxFit.cover,
@@ -642,12 +656,13 @@ class ChatScreenState extends State<ChatScreen> {
       child: Row(
         children: <Widget>[
           // Button send image
+
           Material(
             child: new Container(
               margin: new EdgeInsets.symmetric(horizontal: 1.0),
               child: new IconButton(
-                icon: new Icon(Icons.image),
-                onPressed: getImage,
+                icon: new Icon(FontAwesomeIcons.smile),
+                onPressed: getSticker,
                 color: primaryColor,
               ),
             ),
@@ -657,8 +672,19 @@ class ChatScreenState extends State<ChatScreen> {
             child: new Container(
               margin: new EdgeInsets.symmetric(horizontal: 1.0),
               child: new IconButton(
-                icon: new Icon(FontAwesomeIcons.smile),
-                onPressed: getSticker,
+                icon: new Icon(Icons.camera_alt),
+                onPressed: getImageCamera,
+                color: primaryColor,
+              ),
+            ),
+            color: Colors.white,
+          ),
+          Material(
+            child: new Container(
+              margin: new EdgeInsets.symmetric(horizontal: 1.0),
+              child: new IconButton(
+                icon: new Icon(Icons.image),
+                onPressed: getImage,
                 color: primaryColor,
               ),
             ),
@@ -683,11 +709,11 @@ class ChatScreenState extends State<ChatScreen> {
           // Button send message
           Material(
             child: new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 8.0),
+              margin: new EdgeInsets.only(left: 8.0, right: 8.0),
               child: new IconButton(
                 icon: new Icon(Icons.send),
                 onPressed: () => onSendMessage(textEditingController.text, 0),
-                color: primaryColor,
+                color: darkPrimaryColor,
               ),
             ),
             color: Colors.white,

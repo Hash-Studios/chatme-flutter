@@ -10,13 +10,6 @@ class FullPhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(
-          'FULL PHOTO',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
       body: new FullPhotoScreen(url: url),
     );
   }
@@ -43,6 +36,13 @@ class FullPhotoScreenState extends State<FullPhotoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: PhotoView(imageProvider: NetworkImage(url)));
+    return Container(
+        child: Hero(tag: "img$url",
+                  child: PhotoView(
+      imageProvider: NetworkImage(url),
+      minScale: 0.3,
+      backgroundDecoration: BoxDecoration(color: Colors.white),
+    ),
+        ));
   }
 }
