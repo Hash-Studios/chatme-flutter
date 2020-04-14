@@ -253,11 +253,11 @@ class MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(backgroundColor: lightPrimaryColor,
       appBar: AppBar(
         title: Text(
           'ChatMe',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+          style: TextStyle(color: textIconsColor, fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
           PopupMenuButton<Choice>(
@@ -270,14 +270,14 @@ class MainScreenState extends State<MainScreen> {
                       children: <Widget>[
                         Icon(
                           choice.icon,
-                          color: primaryColor,
+                          color: secondaryTextColor,
                         ),
                         Container(
                           width: 10.0,
                         ),
                         Text(
                           choice.title,
-                          style: TextStyle(color: primaryColor),
+                          style: TextStyle(color: primaryTextColor),
                         ),
                       ],
                     ));
@@ -361,7 +361,7 @@ class MainScreenState extends State<MainScreen> {
                     : Icon(
                         Icons.account_circle,
                         size: 50.0,
-                        color: textIconsColor,
+                        color: lightPrimaryColor,
                       ),
                 borderRadius: BorderRadius.all(Radius.circular(25.0)),
                 clipBehavior: Clip.hardEdge,
@@ -372,16 +372,16 @@ class MainScreenState extends State<MainScreen> {
                     children: <Widget>[
                       Container(
                         child: Text(
-                          'Nickname: ${document['nickname']}',
-                          style: TextStyle(color: primaryColor),
+                          '${document['nickname']}',
+                          style: TextStyle(color: primaryTextColor,fontSize: 18),
                         ),
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 5.0),
                       ),
                       Container(
                         child: Text(
-                          'About me: ${document['aboutMe'] ?? 'Not available'}',
-                          style: TextStyle(color: primaryColor),
+                          '${document['aboutMe'] ?? 'Not available'}',
+                          style: TextStyle(color: secondaryTextColor),
                         ),
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
