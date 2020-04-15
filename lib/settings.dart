@@ -22,12 +22,12 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<DynamicTheme>(context);
     return new Scaffold(
-      backgroundColor: lightPrimaryColor,
+      backgroundColor: themeProvider.isDarkMode?lightPrimaryColorL:lightPrimaryColorD,
       appBar: new AppBar(
         title: new Text(
           'Settings',
           style: TextStyle(
-            color: textIconsColor,
+            color: themeProvider.isDarkMode?textIconsColorL:textIconsColorD,
           ),
         ),
         actions: <Widget>[
@@ -178,6 +178,7 @@ class SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<DynamicTheme>(context);
     return Stack(
       children: <Widget>[
         SingleChildScrollView(
@@ -197,7 +198,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                                         strokeWidth: 2.0,
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
-                                                darkPrimaryColor),
+                                                themeProvider.isDarkMode?darkPrimaryColorL:darkPrimaryColorD),
                                       ),
                                       width: 90.0,
                                       height: 90.0,
@@ -215,7 +216,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                               : Icon(
                                   Icons.account_circle,
                                   size: 90.0,
-                                  color: textIconsColor,
+                                  color: themeProvider.isDarkMode?textIconsColorL:textIconsColorD,
                                 ))
                           : Material(
                               child: Image.file(
@@ -231,12 +232,12 @@ class SettingsScreenState extends State<SettingsScreen> {
                       IconButton(
                         icon: Icon(
                           Icons.camera_alt,
-                          color: textIconsColor.withOpacity(0.5),
+                          color: themeProvider.isDarkMode?textIconsColorL:textIconsColorD.withOpacity(0.5),
                         ),
                         onPressed: getImage,
                         padding: EdgeInsets.all(30.0),
                         splashColor: Colors.transparent,
-                        highlightColor: textIconsColor,
+                        highlightColor: themeProvider.isDarkMode?textIconsColorL:textIconsColorD,
                         iconSize: 30.0,
                       ),
                     ],
@@ -249,7 +250,7 @@ class SettingsScreenState extends State<SettingsScreen> {
               // Input
               Container(
                 decoration: BoxDecoration(
-                    color: textIconsColor,
+                    color: themeProvider.isDarkMode?rightTextColorL:rightTextColorD,
                     borderRadius: BorderRadius.circular(15)),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(8, 8, 8, 25),
@@ -262,7 +263,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                           style: TextStyle(
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.bold,
-                              color: darkPrimaryColor),
+                              color: themeProvider.isDarkMode?darkPrimaryColorL:darkPrimaryColorD),
                         ),
                         margin:
                             EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
@@ -270,12 +271,12 @@ class SettingsScreenState extends State<SettingsScreen> {
                       Container(
                         child: Theme(
                           data: Theme.of(context)
-                              .copyWith(primaryColor: primaryColor),
+                              .copyWith(primaryColor: themeProvider.isDarkMode?primaryColorL:primaryColorD),
                           child: TextField(
                             decoration: InputDecoration(
                               hintText: 'User Name',
                               contentPadding: new EdgeInsets.all(5.0),
-                              hintStyle: TextStyle(color: darkPrimaryColor),
+                              hintStyle: TextStyle(color: themeProvider.isDarkMode?darkPrimaryColorL:darkPrimaryColorD),
                             ),
                             controller: controllerNickname,
                             onChanged: (value) {
@@ -294,7 +295,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                           style: TextStyle(
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.bold,
-                              color: darkPrimaryColor),
+                              color: themeProvider.isDarkMode?darkPrimaryColorL:darkPrimaryColorD),
                         ),
                         margin:
                             EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
@@ -302,12 +303,12 @@ class SettingsScreenState extends State<SettingsScreen> {
                       Container(
                         child: Theme(
                           data: Theme.of(context)
-                              .copyWith(primaryColor: primaryColor),
+                              .copyWith(primaryColor: themeProvider.isDarkMode?primaryColorL:primaryColorD),
                           child: TextField(
                             decoration: InputDecoration(
                               hintText: 'Write your bio here...',
                               contentPadding: EdgeInsets.all(5.0),
-                              hintStyle: TextStyle(color: darkPrimaryColor),
+                              hintStyle: TextStyle(color: themeProvider.isDarkMode?darkPrimaryColorL:darkPrimaryColorD),
                             ),
                             controller: controllerAboutMe,
                             onChanged: (value) {
@@ -346,10 +347,10 @@ class SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ],
                   ),
-                  color: primaryColor,
+                  color: themeProvider.isDarkMode?primaryColorL:primaryColorD,
                   highlightColor: new Color(0xff8d93a0),
                   splashColor: Colors.transparent,
-                  textColor: Colors.white,
+                  textColor: themeProvider.isDarkMode?rightTextColorL:rightTextColorD,
                   padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
                 ),
                 margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
@@ -360,7 +361,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                   SizedBox(
                     height: 200,
                   ),
-                  Text('www.codenameakshay.tech')
+                  Text('www.codenameakshay.tech',style: TextStyle(color: themeProvider.isDarkMode?darkPrimaryColorL:darkPrimaryColorD),)
                 ],
               )
             ],
@@ -375,7 +376,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                   child: Center(
                     child: CircularProgressIndicator(
                         valueColor:
-                            AlwaysStoppedAnimation<Color>(darkPrimaryColor)),
+                            AlwaysStoppedAnimation<Color>(themeProvider.isDarkMode?darkPrimaryColorL:darkPrimaryColorD)),
                   ),
                   color: Colors.white.withOpacity(0.8),
                 )

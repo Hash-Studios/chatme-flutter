@@ -138,16 +138,24 @@ class MainScreenState extends State<MainScreen> {
   }
 
   Future<Null> openDialog() async {
+    final themeProvider = Provider.of<DynamicTheme>(context);
     switch (await showDialog(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          return SimpleDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             contentPadding:
                 EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0, bottom: 0.0),
             children: <Widget>[
-              ClipRRect(borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
-                              child: Container(
-                  color: darkPrimaryColor,
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15)),
+                child: Container(
+                  color: themeProvider.isDarkMode
+                      ? darkPrimaryColorL
+                      : darkPrimaryColorD,
                   margin: EdgeInsets.all(0.0),
                   padding: EdgeInsets.only(bottom: 18.0, top: 18.0),
                   height: 120.0,
@@ -157,26 +165,35 @@ class MainScreenState extends State<MainScreen> {
                         child: Icon(
                           Icons.exit_to_app,
                           size: 30.0,
-                          color: Colors.white,
+                          color: themeProvider.isDarkMode
+                              ? rightTextColorL
+                              : rightTextColorD,
                         ),
                         margin: EdgeInsets.only(bottom: 10.0),
                       ),
                       Text(
                         'Quit ChatMe',
                         style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkMode
+                                ? rightTextColorL
+                                : rightTextColorD,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
                         'You sure want to quit app?',
-                        style: TextStyle(color: Colors.white70, fontSize: 14.0),
+                        style: TextStyle(
+                            color: themeProvider.isDarkMode
+                                ? rightTextColorL
+                                : rightTextColorD,
+                            fontSize: 14.0),
                       ),
                     ],
                   ),
                 ),
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SimpleDialogOption(
                     onPressed: () {
@@ -187,14 +204,19 @@ class MainScreenState extends State<MainScreen> {
                         Container(
                           child: Icon(
                             Icons.cancel,
-                            color: primaryColor,
+                            color: themeProvider.isDarkMode
+                                ? primaryColorL
+                                : primaryColorD,
                           ),
                           margin: EdgeInsets.only(right: 10.0),
                         ),
                         Text(
                           'CANCEL',
                           style: TextStyle(
-                              color: primaryColor, fontWeight: FontWeight.bold),
+                              color: themeProvider.isDarkMode
+                                  ? primaryColorL
+                                  : primaryColorD,
+                              fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
@@ -208,14 +230,19 @@ class MainScreenState extends State<MainScreen> {
                         Container(
                           child: Icon(
                             Icons.check_circle,
-                            color: primaryColor,
+                            color: themeProvider.isDarkMode
+                                ? primaryColorL
+                                : primaryColorD,
                           ),
                           margin: EdgeInsets.only(right: 10.0),
                         ),
                         Text(
                           'YES',
                           style: TextStyle(
-                              color: primaryColor, fontWeight: FontWeight.bold),
+                              color: themeProvider.isDarkMode
+                                  ? primaryColorL
+                                  : primaryColorD,
+                              fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
@@ -253,11 +280,17 @@ class MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: lightPrimaryColor,
+    final themeProvider = Provider.of<DynamicTheme>(context);
+    return Scaffold(
+      backgroundColor:
+          themeProvider.isDarkMode ? lightPrimaryColorL : lightPrimaryColorD,
       appBar: AppBar(
         title: Text(
           'ChatMe',
-          style: TextStyle(color: textIconsColor, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color:
+                  themeProvider.isDarkMode ? textIconsColorL : textIconsColorD,
+              fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
           PopupMenuButton<Choice>(
@@ -270,14 +303,19 @@ class MainScreenState extends State<MainScreen> {
                       children: <Widget>[
                         Icon(
                           choice.icon,
-                          color: secondaryTextColor,
+                          color: themeProvider.isDarkMode
+                              ? secondaryTextColorL
+                              : secondaryTextColorD,
                         ),
                         Container(
                           width: 10.0,
                         ),
                         Text(
                           choice.title,
-                          style: TextStyle(color: primaryTextColor),
+                          style: TextStyle(
+                              color: themeProvider.isDarkMode
+                                  ? primaryTextColorL
+                                  : secondaryTextColorD),
                         ),
                       ],
                     ));
@@ -297,7 +335,10 @@ class MainScreenState extends State<MainScreen> {
                   if (!snapshot.hasData) {
                     return Center(
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(darkPrimaryColor),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            themeProvider.isDarkMode
+                                ? darkPrimaryColorL
+                                : darkPrimaryColorD),
                       ),
                     );
                   } else {
@@ -318,8 +359,10 @@ class MainScreenState extends State<MainScreen> {
                   ? Container(
                       child: Center(
                         child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(darkPrimaryColor)),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                themeProvider.isDarkMode
+                                    ? darkPrimaryColorL
+                                    : darkPrimaryColorD)),
                       ),
                       color: Colors.white.withOpacity(0.8),
                     )
@@ -333,6 +376,7 @@ class MainScreenState extends State<MainScreen> {
   }
 
   Widget buildItem(BuildContext context, DocumentSnapshot document) {
+    final themeProvider = Provider.of<DynamicTheme>(context);
     if (document['id'] == currentUserId) {
       return Container();
     } else {
@@ -346,8 +390,10 @@ class MainScreenState extends State<MainScreen> {
                         placeholder: (context, url) => Container(
                           child: CircularProgressIndicator(
                             strokeWidth: 1.0,
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(darkPrimaryColor),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                themeProvider.isDarkMode
+                                    ? darkPrimaryColorL
+                                    : darkPrimaryColorD),
                           ),
                           width: 50.0,
                           height: 50.0,
@@ -361,7 +407,9 @@ class MainScreenState extends State<MainScreen> {
                     : Icon(
                         Icons.account_circle,
                         size: 50.0,
-                        color: lightPrimaryColor,
+                        color: themeProvider.isDarkMode
+                            ? lightPrimaryColorL
+                            : lightPrimaryColorD,
                       ),
                 borderRadius: BorderRadius.all(Radius.circular(25.0)),
                 clipBehavior: Clip.hardEdge,
@@ -373,7 +421,11 @@ class MainScreenState extends State<MainScreen> {
                       Container(
                         child: Text(
                           '${document['nickname']}',
-                          style: TextStyle(color: primaryTextColor,fontSize: 18),
+                          style: TextStyle(
+                              color: themeProvider.isDarkMode
+                                  ? primaryTextColorL
+                                  : primaryTextColorD,
+                              fontSize: 18),
                         ),
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 5.0),
@@ -381,7 +433,10 @@ class MainScreenState extends State<MainScreen> {
                       Container(
                         child: Text(
                           '${document['aboutMe'] ?? 'Not available'}',
-                          style: TextStyle(color: secondaryTextColor),
+                          style: TextStyle(
+                              color: themeProvider.isDarkMode
+                                  ? primaryTextColorL
+                                  : primaryTextColorD),
                         ),
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
@@ -403,7 +458,7 @@ class MainScreenState extends State<MainScreen> {
                           peerName: document['nickname'],
                         )));
           },
-          color: textIconsColor,
+          color: themeProvider.isDarkMode ? rightTextColorL : rightTextColorD,
           padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

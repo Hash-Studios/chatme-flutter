@@ -53,6 +53,7 @@ class _LoginScreen3State extends State<LoginScreen3>
   }
 
   Widget HomePage() {
+    final themeProvider = Provider.of<DynamicTheme>(context);
     return Scaffold(
       body: new Container(
         height: MediaQuery.of(context).size.height,
@@ -279,6 +280,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<DynamicTheme>(context);
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -336,7 +338,7 @@ class LoginScreenState extends State<LoginScreen> {
                   ? Container(
                       child: Center(
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(darkPrimaryColor),
+                          valueColor: AlwaysStoppedAnimation<Color>(themeProvider.isDarkMode?darkPrimaryColorL:darkPrimaryColorD),
                         ),
                       ),
                       color: Colors.white.withOpacity(0.8),

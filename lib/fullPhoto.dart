@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './const.dart';
 import 'package:photo_view/photo_view.dart';
+import './theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class FullPhoto extends StatelessWidget {
   final String url;
@@ -45,6 +47,7 @@ class FullPhotoScreenState extends State<FullPhotoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<DynamicTheme>(context);
     return Container(
         child: Hero(
       tag: "img$url",
@@ -52,7 +55,7 @@ class FullPhotoScreenState extends State<FullPhotoScreen> {
         imageProvider: NetworkImage(url),
         minScale: 0.3,
         // loadingBuilder: loadingImage,
-        backgroundDecoration: BoxDecoration(color: Colors.white),
+        backgroundDecoration: BoxDecoration(color: themeProvider.isDarkMode?blackWhiteColorL:blackWhiteColorD),
       ),
     ));
   }
