@@ -2,6 +2,20 @@
 
 A new Flutter project.
 
+- [ ] SplashScreen always requires pressing Start Chatting
+- [ ] GroupChat
+- [ ] Wallpapers
+- [ ] Update settings page
+- [ ] Add more stickers
+- [ ] Chat forwarding
+- [ ] Copy chat text
+- [ ] Allow image/gif from keyboard
+- [ ] Allow video sharing
+- [ ] Allow music sharing
+- [ ] Show chatting person info
+- [ ] Show lastseen
+- [ ] Notifications
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
