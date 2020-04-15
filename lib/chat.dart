@@ -336,6 +336,7 @@ class ChatScreenState extends State<ChatScreen> {
                                   right: 10.0),
                             )
                           : Container(
+                              //giphy gifs
                               child: FlatButton(
                                 child: Material(
                                   child: CachedNetworkImage(
@@ -510,17 +511,79 @@ class ChatScreenState extends State<ChatScreen> {
                             ),
                             margin: EdgeInsets.only(left: 10.0),
                           )
-                        : Container(
-                            child: new Image.asset(
-                              'assets/images/${document['content']}.gif',
-                              width: 100.0,
-                              height: 100.0,
-                              fit: BoxFit.cover,
-                            ),
-                            margin: EdgeInsets.only(
-                                bottom: isLastMessageRight(index) ? 20.0 : 10.0,
-                                right: 10.0),
-                          ),
+                        : document['type'] == 2
+                            ? Container(
+                                child: new Image.asset(
+                                  'assets/images/${document['content']}.gif',
+                                  width: 100.0,
+                                  height: 100.0,
+                                  fit: BoxFit.cover,
+                                ),
+                                margin: EdgeInsets.only(
+                                    bottom:
+                                        isLastMessageRight(index) ? 20.0 : 10.0,
+                                    right: 10.0),
+                              )
+                            : Container(
+                                //giphy gifs
+                                child: FlatButton(
+                                  child: Material(
+                                    child: CachedNetworkImage(
+                                      placeholder: (context, url) => Hero(
+                                        tag: "img$url",
+                                        child: Container(
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    darkPrimaryColor),
+                                          ),
+                                          width: 200.0,
+                                          height: 200.0,
+                                          padding: EdgeInsets.all(70.0),
+                                          decoration: BoxDecoration(
+                                            color: lightPrimaryColor,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Material(
+                                        child: Image.asset(
+                                          'assets/images/img_not_available.jpeg',
+                                          width: 200.0,
+                                          height: 200.0,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8.0),
+                                        ),
+                                        clipBehavior: Clip.hardEdge,
+                                      ),
+                                      imageUrl: document['content'],
+                                      width: 200.0,
+                                      height: 200.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                    clipBehavior: Clip.hardEdge,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => FullPhoto(
+                                                url: document['content'])));
+                                  },
+                                  padding: EdgeInsets.all(0),
+                                ),
+                                margin: EdgeInsets.only(
+                                    bottom:
+                                        isLastMessageRight(index) ? 0.0 : 0.0,
+                                    right: 10.0),
+                              ),
               ],
             ),
             Container(
