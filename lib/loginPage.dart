@@ -145,6 +145,11 @@ class _LoginScreen3State extends State<LoginScreen3>
 
   PageController _controller =
       new PageController(initialPage: 0, viewportFraction: 1.0);
+  SharedPreferences prefs;
+  Future<String> getLogin() async {
+    prefs = await SharedPreferences.getInstance();
+    return prefs.getString('isLoggedIn');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,12 +158,25 @@ class _LoginScreen3State extends State<LoginScreen3>
         child: PageView(
           controller: _controller,
           physics: new AlwaysScrollableScrollPhysics(),
-          children: <Widget>[
-            HomePage(),
-            LoginScreen(
-              title: "ChatMe",
-            )
-          ],
+          children: getLogin() == null
+              ? <Widget>[
+                  HomePage(),
+                  LoginScreen(
+                    title: "ChatMe",
+                  )
+                ]
+              : getLogin() == true
+                  ? <Widget>[
+                      LoginScreen(
+                        title: "ChatMe",
+                      )
+                    ]
+                  : <Widget>[
+                      HomePage(),
+                      LoginScreen(
+                        title: "ChatMe",
+                      )
+                    ],
           scrollDirection: Axis.horizontal,
         ));
   }
@@ -245,7 +263,9 @@ class LoginScreenState extends State<LoginScreen> {
           'photoUrl': firebaseUser.photoUrl,
           'id': firebaseUser.uid,
           'createdAt': DateTime.now().millisecondsSinceEpoch.toString(),
-          'chattingWith': null
+          'chattingWith': null,
+          'online' : false,
+          // 'lastSeen': DateTime.now().millisecondsSinceEpoch.toString(),
         });
 
         // Write data to local
@@ -253,12 +273,14 @@ class LoginScreenState extends State<LoginScreen> {
         await prefs.setString('id', currentUser.uid);
         await prefs.setString('nickname', currentUser.displayName);
         await prefs.setString('photoUrl', currentUser.photoUrl);
+        await prefs.setString('logged', isLoggedIn.toString());
       } else {
         // Write data to local
         await prefs.setString('id', documents[0]['id']);
         await prefs.setString('nickname', documents[0]['nickname']);
         await prefs.setString('photoUrl', documents[0]['photoUrl']);
         await prefs.setString('aboutMe', documents[0]['aboutMe']);
+        await prefs.setString('logged', isLoggedIn.toString());
       }
       Fluttertoast.showToast(msg: "Sign in success");
       this.setState(() {
@@ -298,7 +320,8 @@ class LoginScreenState extends State<LoginScreen> {
             new Container(
               margin: EdgeInsets.only(left: 60.0, right: 60),
               alignment: Alignment.center,
-              child: new Row(mainAxisAlignment: MainAxisAlignment.center,
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new FlatButton(
                     shape: new RoundedRectangleBorder(
@@ -338,7 +361,10 @@ class LoginScreenState extends State<LoginScreen> {
                   ? Container(
                       child: Center(
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(themeProvider.isDarkMode?darkPrimaryColorL:darkPrimaryColorD),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              themeProvider.isDarkMode
+                                  ? darkPrimaryColorL
+                                  : darkPrimaryColorD),
                         ),
                       ),
                       color: Colors.white.withOpacity(0.8),

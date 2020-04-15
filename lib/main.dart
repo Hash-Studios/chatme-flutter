@@ -105,11 +105,9 @@ class MainScreenState extends State<MainScreen> {
 
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      Platform.isAndroid
-          ? 'com.dfa.flutterchatdemo'
-          : 'com.duytq.flutterchatdemo',
+      Platform.isAndroid ? 'com.example.chatme' : 'com.example.chatme',
       'ChatMe',
-      'your channel description',
+      'Incoming Message',
       playSound: true,
       enableVibration: true,
       importance: Importance.Max,
@@ -456,6 +454,7 @@ class MainScreenState extends State<MainScreen> {
                           peerId: document.documentID,
                           peerAvatar: document['photoUrl'],
                           peerName: document['nickname'],
+                          peerStatus: document['online'],
                         )));
           },
           color: themeProvider.isDarkMode ? rightTextColorL : rightTextColorD,
