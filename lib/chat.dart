@@ -165,7 +165,7 @@ class ChatScreenState extends State<ChatScreen> {
     gif = await GiphyPicker.pickGif(
             showPreviewPage: false,
             context: context,
-            apiKey: 'RNBmN2cvGifZV95iMZJZSePN1wsyfiUt')
+            apiKey: 'Giphy api key')
         .then((value) {
       gifURL = value.images.original.url;
       // print(gifURL);
